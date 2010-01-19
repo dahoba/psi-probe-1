@@ -10,6 +10,7 @@
  */
 package com.googlecode.psiprobe.beans;
 
+import com.googlecode.psiprobe.beans.DatasourceAccessor;
 import com.googlecode.psiprobe.model.DataSourceInfo;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
