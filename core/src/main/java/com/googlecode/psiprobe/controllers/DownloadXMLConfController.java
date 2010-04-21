@@ -11,12 +11,13 @@
 package com.googlecode.psiprobe.controllers;
 
 import com.googlecode.psiprobe.Utils;
-import java.io.File;
+import org.apache.catalina.Context;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.catalina.Context;
-import org.springframework.web.servlet.ModelAndView;
+import java.io.File;
 
 /**
  * Downloads a deployment descriptor (web.xml) or a context descriptor (context.xml) of a web application
