@@ -140,13 +140,7 @@
                                 titleKey="probe.jsp.sessionAttibutes.col.value">
                     <c:choose>
                         <c:when test="${session.allowedToViewValues}">
-                            <c:catch var="displayException">
-                                <c:out value="${attribute.value}" escapeXml="true"/>
-                            </c:catch>
-                            <c:if test="${not empty displayException}">
-                                <span class="errorValue">**************</span>
-                                <c:remove var="displayException" />
-                            </c:if>
+                            <c:out value="${attribute.value}" escapeXml="true"/>
                         </c:when>
                         <c:otherwise>
                             **************

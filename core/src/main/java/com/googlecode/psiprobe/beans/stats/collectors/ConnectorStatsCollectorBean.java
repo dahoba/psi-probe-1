@@ -12,6 +12,7 @@ package com.googlecode.psiprobe.beans.stats.collectors;
 
 import com.googlecode.psiprobe.beans.ContainerListenerBean;
 import com.googlecode.psiprobe.model.ThreadPool;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,23 +39,6 @@ public class ConnectorStatsCollectorBean extends BaseStatsCollectorBean {
             buildDeltaStats(statName + ".received", pool.getBytesReceived());
             buildAbsoluteStats(statName + ".threads_busy", pool.getCurrentThreadsBusy());
         }
-    }
-
-    public void reset() throws Exception {
-        List pools = listenerBean.getThreadPools(false);
-        for (Iterator it = pools.iterator(); it.hasNext();) {
-            ThreadPool pool = (ThreadPool) it.next();
-            reset(pool.getName());
-        }
-    }
-
-    public void reset(String connectorName) {
-        String statName = "stat.connector." + connectorName;
-        resetStats(statName + ".requests");
-        resetStats(statName + ".errors");
-        resetStats(statName + ".sent");
-        resetStats(statName + ".received");
-        resetStats(statName + ".threads_busy");
     }
 
 }

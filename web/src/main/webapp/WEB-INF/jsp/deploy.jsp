@@ -32,19 +32,10 @@
     </div>
 </c:if>
 
-<c:if test="${success}">
+<c:if test="${! empty successMessage}">
     <div id="successMessage">
-        <c:set var="successLink">
-            <a href="<c:url value='/appsummary.htm'><c:param name='webapp' value='${contextName}'/></c:url>">
-                ${contextName}
-            </a>
-        </c:set>
-        <spring:message code="probe.jsp.deployment.war.success" arguments="${successLink}" />
-        <c:if test="${compileSuccess}">
-            <a href="<c:url value='/app/jsp.htm'><c:param name='webapp' value='${contextName}'/></c:url>">
-                <spring:message code="probe.jsp.deployment.compilationDetails"/>
-            </a>
-        </c:if>
+        ${successMessage}<c:if test="${! empty compiled_app}">&nbsp;
+        <a href="<c:url value='/app/jsp.htm'><c:param name='webapp' value='${compiled_app}'/></c:url>"><spring:message code="probe.jsp.deployment.compilationDetails"/></a></c:if>
     </div>
 </c:if>
 

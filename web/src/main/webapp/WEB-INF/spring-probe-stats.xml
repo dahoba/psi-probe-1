@@ -15,11 +15,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
        default-dependency-check="none" default-lazy-init="false">
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="/WEB-INF/stats.properties" />
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-    </bean>
-
     <!--
         Stats collection bean. Holds all stats the Probe collects
     -->
@@ -43,7 +38,7 @@
           class="com.googlecode.psiprobe.beans.stats.collectors.ConnectorStatsCollectorBean">
         <property name="listenerBean" ref="containerListener"/>
         <property name="statsCollection" ref="statsCollection"/>
-        <property name="maxSeries" value="${com.googlecode.psiprobe.beans.stats.collectors.connector.maxSeries}"/>
+        <property name="maxSeries" value="240"/>
     </bean>
 
     <!--
@@ -54,7 +49,7 @@
         <property name="clusterWrapper" ref="clusterWrapper"/>
         <property name="containerWrapper" ref="containerWrapper"/>
         <property name="statsCollection" ref="statsCollection"/>
-        <property name="maxSeries" value="${com.googlecode.psiprobe.beans.stats.collectors.cluster.maxSeries}"/>
+        <property name="maxSeries" value="240"/>
     </bean>
 
     <!--
@@ -64,19 +59,19 @@
           class="com.googlecode.psiprobe.beans.stats.collectors.JvmMemoryStatsCollectorBean">
         <property name="jvmMemoryInfoAccessor" ref="jvmMemoryInfoAccessor"/>
         <property name="statsCollection" ref="statsCollection"/>
-        <property name="maxSeries" value="${com.googlecode.psiprobe.beans.stats.collectors.memory.maxSeries}"/>
+        <property name="maxSeries" value="240"/>
     </bean>
 
     <bean name="runtimeStatsCollector" class="com.googlecode.psiprobe.beans.stats.collectors.RuntimeStatsCollectorBean">
         <property name="runtimeInfoAccessorBean" ref="runtimeInfoAccessor"/>
         <property name="statsCollection" ref="statsCollection"/>
-        <property name="maxSeries" value="${com.googlecode.psiprobe.beans.stats.collectors.runtime.maxSeries}"/>
+        <property name="maxSeries" value="240"/>
     </bean>
 
     <bean name="appStatsCollector" class="com.googlecode.psiprobe.beans.stats.collectors.AppStatsCollector">
         <property name="containerWrapper" ref="containerWrapper"/>
         <property name="statsCollection" ref="statsCollection"/>
-        <property name="maxSeries" value="${com.googlecode.psiprobe.beans.stats.collectors.app.maxSeries}"/>
+        <property name="maxSeries" value="60"/>
     </bean>
 
     <!--
@@ -239,32 +234,32 @@
 
     <bean id="connectorStatsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="connectorStatsJobDetail"/>
-        <property name="cronExpression" value="${com.googlecode.psiprobe.beans.stats.collectors.connector.cron}"/>
+        <property name="cronExpression" value="0,30 * * * * ?"/>
     </bean>
 
     <bean id="clusterStatsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="clusterStatsJobDetail"/>
-        <property name="cronExpression" value="${com.googlecode.psiprobe.beans.stats.collectors.cluster.cron}"/>
+        <property name="cronExpression" value="0,30 * * * * ?"/>
     </bean>
 
     <bean id="memoryStatsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="memoryStatsJobDetail"/>
-        <property name="cronExpression" value="${com.googlecode.psiprobe.beans.stats.collectors.memory.cron}"/>
+        <property name="cronExpression" value="0,30 * * * * ?"/>
     </bean>
 
     <bean id="runtimeStatsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="runtimeStatsJobDetail"/>
-        <property name="cronExpression" value="${com.googlecode.psiprobe.beans.stats.collectors.runtime.cron}"/>
+        <property name="cronExpression" value="0,30 * * * * ?"/>
     </bean>
 
     <bean id="appStatsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="appStatsJobDetail"/>
-        <property name="cronExpression" value="${com.googlecode.psiprobe.beans.stats.collectors.app.cron}"/>
+        <property name="cronExpression" value="0 0/2 * * * ?"/>
     </bean>
 
     <bean id="statsSerializerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="statsSerializerJobDetail"/>
-        <property name="cronExpression" value="${com.googlecode.psiprobe.beans.stats.serializer.cron}"/>
+        <property name="cronExpression" value="10 0/5 * * * ?"/>
     </bean>
 
 

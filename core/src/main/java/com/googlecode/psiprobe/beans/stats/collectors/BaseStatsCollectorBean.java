@@ -11,11 +11,12 @@
 package com.googlecode.psiprobe.beans.stats.collectors;
 
 import com.googlecode.psiprobe.Utils;
+import org.jfree.data.xy.XYDataItem;
 import com.googlecode.psiprobe.model.stats.StatsCollection;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.jfree.data.xy.XYDataItem;
 
 public class BaseStatsCollectorBean {
 
@@ -117,10 +118,6 @@ public class BaseStatsCollectorBean {
                 statsCollection.releaseLock();
             }
         }
-    }
-
-    protected void resetStats(String name) {
-        statsCollection.resetStats(name);
     }
 
     private void houseKeepStats(List stats) {

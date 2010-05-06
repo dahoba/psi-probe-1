@@ -10,12 +10,13 @@
  */
 package com.googlecode.psiprobe;
 
-import com.googlecode.psiprobe.beans.ContainerWrapperBean;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.ContainerServlet;
 import org.apache.catalina.Wrapper;
+import com.googlecode.psiprobe.beans.ContainerWrapperBean;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Main dispatcher servlet. Spring default dispatcher servlet had to be superceeded to handle "privileged" application
