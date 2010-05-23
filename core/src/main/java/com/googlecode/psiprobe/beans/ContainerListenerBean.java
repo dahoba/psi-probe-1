@@ -29,6 +29,7 @@ import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.modeler.Registry;
 
 /**
  * This class interfaces Tomcat JMX functionality to read connection status. The class
@@ -40,19 +41,6 @@ public class ContainerListenerBean implements NotificationListener {
 
     private Log logger = LogFactory.getLog(getClass());
     private List poolNames = null;
-
-    /**
-     * Used to obtain required {@link MBeanServer} instance.
-     */
-    private ContainerWrapperBean containerWrapper;
-
-    public ContainerWrapperBean getContainerWrapper() {
-        return containerWrapper;
-    }
-
-    public void setContainerWrapper(ContainerWrapperBean containerWrapper) {
-        this.containerWrapper = containerWrapper;
-    }
 
     private boolean isInitialized() {
         return poolNames != null && poolNames.size() > 0;
@@ -113,7 +101,7 @@ public class ContainerListenerBean implements NotificationListener {
      */
     private synchronized void initialize() throws Exception {
 
-        MBeanServer server = getContainerWrapper().getResourceResolver().getMBeanServer();
+        MBeanServer server = new Registry().getMBeanServer();
         Set set = server.queryMBeans(new ObjectName("*:type=ThreadPool,*"), null);
         poolNames = new ArrayList(set.size());
         for (Iterator it = set.iterator(); it.hasNext();) {
@@ -159,7 +147,7 @@ public class ContainerListenerBean implements NotificationListener {
 
         List threadPools = new ArrayList(poolNames.size());
 
-        MBeanServer server = getContainerWrapper().getResourceResolver().getMBeanServer();
+        MBeanServer server = new Registry().getMBeanServer();
 
         for (Iterator it = poolNames.iterator(); it.hasNext();) {
 
@@ -248,8 +236,7 @@ public class ContainerListenerBean implements NotificationListener {
 
             ThreadPoolObjectName threadPoolObjectName = (ThreadPoolObjectName) it.next();
             ObjectName poolName = threadPoolObjectName.getThreadPoolName();
-            String name = poolName.getKeyProperty("name");
-            threadPoolNames.add(name);
+            threadPoolNames.add(poolName.getKeyProperty("name"));
         }
         return threadPoolNames;
     }

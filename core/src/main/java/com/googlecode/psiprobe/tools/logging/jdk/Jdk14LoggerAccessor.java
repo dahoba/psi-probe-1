@@ -10,13 +10,14 @@
  */
 package com.googlecode.psiprobe.tools.logging.jdk;
 
+import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import com.googlecode.psiprobe.model.Application;
 import com.googlecode.psiprobe.tools.logging.DefaultAccessor;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import org.apache.commons.beanutils.MethodUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 
 public class Jdk14LoggerAccessor extends DefaultAccessor {
 

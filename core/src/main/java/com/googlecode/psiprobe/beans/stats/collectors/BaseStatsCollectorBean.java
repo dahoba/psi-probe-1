@@ -11,13 +11,14 @@
 package com.googlecode.psiprobe.beans.stats.collectors;
 
 import com.googlecode.psiprobe.Utils;
+import org.jfree.data.xy.XYDataItem;
 import com.googlecode.psiprobe.model.stats.StatsCollection;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.jfree.data.xy.XYDataItem;
 
-public abstract class AbstractStatsCollectorBean {
+public class BaseStatsCollectorBean {
 
     private StatsCollection statsCollection;
     private int maxSeries = 240;
@@ -38,8 +39,6 @@ public abstract class AbstractStatsCollectorBean {
     public void setMaxSeries(int maxSeries) {
         this.maxSeries = maxSeries;
     }
-
-    public abstract void collect() throws Exception;
 
     protected long buildDeltaStats(String name, long value) throws InterruptedException {
         return buildDeltaStats(name, value, System.currentTimeMillis());
@@ -119,10 +118,6 @@ public abstract class AbstractStatsCollectorBean {
                 statsCollection.releaseLock();
             }
         }
-    }
-
-    protected void resetStats(String name) {
-        statsCollection.resetStats(name);
     }
 
     private void houseKeepStats(List stats) {

@@ -10,24 +10,25 @@
  */
 package com.googlecode.psiprobe.beans.stats.collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.catalina.Context;
 import com.googlecode.psiprobe.TomcatContainer;
 import com.googlecode.psiprobe.beans.ContainerWrapperBean;
 import com.googlecode.psiprobe.tools.ApplicationUtils;
 import com.googlecode.psiprobe.model.Application;
+
 import java.util.List;
 import java.util.Iterator;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.catalina.Context;
 
 /**
  * Collects application statistics
  * <p/>
  * Author: Andy Shapoval
  */
-public class AppStatsCollectorBean extends AbstractStatsCollectorBean {
+public class AppStatsCollector extends BaseStatsCollectorBean {
 
-    private Log logger = LogFactory.getLog(AppStatsCollectorBean.class);
+    private Log logger = LogFactory.getLog(AppStatsCollector.class);
 
     private ContainerWrapperBean containerWrapper;
 
@@ -88,33 +89,4 @@ public class AppStatsCollectorBean extends AbstractStatsCollectorBean {
         }
         logger.debug("app stats collected in " + (System.currentTimeMillis() - currentTime) + "ms.");
     }
-
-    public void reset() {
-        if (containerWrapper == null) {
-            logger.error("Cannot reset application stats. Container wrapper is not set.");
-        } else {
-            TomcatContainer tomcatContainer = getContainerWrapper().getTomcatContainer();
-            if (tomcatContainer != null) {
-                List contexts = tomcatContainer.findContexts();
-                for (Iterator i = contexts.iterator(); i.hasNext(); ) {
-                    Context ctx = (Context) i.next();
-
-                    if (ctx != null && ctx.getName() != null) {
-                        String appName = "".equals(ctx.getName()) ? "/" : ctx.getName();
-                        reset(appName);
-                    }
-                }
-            }
-        }
-        resetStats("total.requests");
-        resetStats("total.avg_proc_time");
-    }
-
-    public void reset(String appName) {
-        resetStats("app.requests." + appName);
-        resetStats("app.proc_time." + appName);
-        resetStats("app.errors." + appName);
-        resetStats("app.avg_proc_time." + appName);
-    }
-
 }

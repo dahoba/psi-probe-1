@@ -12,10 +12,11 @@ package com.googlecode.psiprobe.beans.stats.collectors;
 
 import com.googlecode.psiprobe.beans.JvmMemoryInfoAccessorBean;
 import com.googlecode.psiprobe.model.jmx.MemoryPool;
+
 import java.util.Iterator;
 import java.util.List;
 
-public class JvmMemoryStatsCollectorBean extends AbstractStatsCollectorBean {
+public class JvmMemoryStatsCollectorBean extends BaseStatsCollectorBean {
     private JvmMemoryInfoAccessorBean jvmMemoryInfoAccessor;
 
     public JvmMemoryInfoAccessorBean getJvmMemoryInfoAccessor() {

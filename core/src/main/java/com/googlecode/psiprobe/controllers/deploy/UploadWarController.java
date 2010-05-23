@@ -10,14 +10,6 @@
  */
 package com.googlecode.psiprobe.controllers.deploy;
 
-import com.googlecode.psiprobe.controllers.TomcatContainerController;
-import com.googlecode.psiprobe.controllers.jsp.DisplayJspController;
-import com.googlecode.psiprobe.model.jsp.Summary;
-import java.io.File;
-import java.net.URL;
-import java.util.Iterator;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.Context;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -26,8 +18,17 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.FilenameUtils;
+import com.googlecode.psiprobe.controllers.TomcatContainerController;
+import com.googlecode.psiprobe.controllers.jsp.DisplayJspController;
+import com.googlecode.psiprobe.model.jsp.Summary;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.net.URL;
+import java.util.Iterator;
 
 /**
  * Uploads and installs web application from a .WAR.
@@ -99,7 +100,6 @@ public class UploadWarController extends TomcatContainerController {
                         if (contextName.equals("/")) {
                             contextName = "";
                         }
-                        request.setAttribute("contextName", contextName);
 
                         if (update && getContainerWrapper().getTomcatContainer().findContext(contextName) != null) {
                             logger.debug("updating "+contextName + ": removing the old copy");
@@ -124,7 +124,7 @@ public class UploadWarController extends TomcatContainerController {
                             if (ctx == null) {
                                 errMsg = getMessageSourceAccessor().getMessage("probe.src.deploy.war.notinstalled", new Object[]{contextName});
                             } else {
-                                request.setAttribute("success", Boolean.TRUE);
+                                request.setAttribute("successMessage", getMessageSourceAccessor().getMessage("probe.src.deploy.war.success", new Object[]{contextName}));
                                 if (discard) {
                                     getContainerWrapper().getTomcatContainer().discardWorkDir(ctx);
                                 }
@@ -137,7 +137,7 @@ public class UploadWarController extends TomcatContainerController {
                                     // pass the name of the newly deployed context to the presentation layer
                                     // using this name the presentation layer can render a url to view compilation details
                                     //
-                                    request.setAttribute("compileSuccess", Boolean.TRUE);
+                                    request.setAttribute("compiled_app", contextName);
                                 }
                             }
 

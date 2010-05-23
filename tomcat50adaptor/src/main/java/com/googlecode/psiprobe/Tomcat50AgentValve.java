@@ -10,17 +10,17 @@
  */
 package com.googlecode.psiprobe;
 
-import com.googlecode.psiprobe.model.ApplicationSession;
-import com.googlecode.psiprobe.model.IPInfo;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.apache.catalina.Valve;
 import org.apache.catalina.Request;
 import org.apache.catalina.Response;
 import org.apache.catalina.ValveContext;
+import com.googlecode.psiprobe.model.ApplicationSession;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class Tomcat50AgentValve implements Valve {
 
@@ -32,11 +32,9 @@ public class Tomcat50AgentValve implements Valve {
         valveContext.invokeNext(request, response);
         ServletRequest servletRequest = request.getRequest();
         if (servletRequest instanceof HttpServletRequest) {
-            HttpServletRequest hsr = (HttpServletRequest) request;
-            HttpSession session = hsr.getSession(false);
+            HttpSession session = ((HttpServletRequest)request).getSession(false);
             if (session != null) {
-                String ip = IPInfo.getClientAddress(hsr);
-                session.setAttribute(ApplicationSession.LAST_ACCESSED_BY_IP, ip);
+                session.setAttribute(ApplicationSession.LAST_ACCESSED_BY_IP, servletRequest.getRemoteAddr());
             }
         }
     }

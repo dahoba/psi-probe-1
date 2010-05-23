@@ -10,15 +10,15 @@
  */
 package com.googlecode.psiprobe;
 
-import com.googlecode.psiprobe.model.ApplicationSession;
-import com.googlecode.psiprobe.model.IPInfo;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
+import com.googlecode.psiprobe.model.ApplicationSession;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class Tomcat55AgentValve extends ValveBase {
 
@@ -32,8 +32,7 @@ public class Tomcat55AgentValve extends ValveBase {
         HttpServletRequest servletRequest = request.getRequest();
         HttpSession session = servletRequest.getSession(false);
         if (session != null) {
-            String ip = IPInfo.getClientAddress(servletRequest);
-            session.setAttribute(ApplicationSession.LAST_ACCESSED_BY_IP, ip);
+            session.setAttribute(ApplicationSession.LAST_ACCESSED_BY_IP, servletRequest.getRemoteAddr());
         }
     }
 }

@@ -10,11 +10,12 @@
  */
 package com.googlecode.psiprobe.beans;
 
-import com.googlecode.psiprobe.Utils;
-import com.googlecode.psiprobe.model.DataSourceInfo;
-import java.util.Properties;
 import oracle.jdbc.pool.OracleConnectionCacheManager;
 import oracle.jdbc.pool.OracleDataSource;
+import com.googlecode.psiprobe.Utils;
+import com.googlecode.psiprobe.model.DataSourceInfo;
+
+import java.util.Properties;
 
 /**
  * Accesses oracle.jdbc.pool.OracleDataSource.

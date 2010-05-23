@@ -10,13 +10,14 @@
  */
 package com.googlecode.psiprobe.controllers;
 
+import org.apache.catalina.Context;
 import com.googlecode.psiprobe.tools.ApplicationUtils;
 import com.googlecode.psiprobe.tools.SecurityUtils;
-import java.util.List;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.catalina.Context;
-import org.springframework.web.servlet.ModelAndView;
+import java.util.List;
 
 /**
  * Retrieves a list of servlet context attributes for a web application.

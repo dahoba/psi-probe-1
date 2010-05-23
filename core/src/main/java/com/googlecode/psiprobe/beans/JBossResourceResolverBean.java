@@ -10,24 +10,25 @@
  */
 package com.googlecode.psiprobe.beans;
 
+import org.apache.catalina.Context;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import com.googlecode.psiprobe.model.ApplicationResource;
 import com.googlecode.psiprobe.model.DataSourceInfo;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import org.apache.catalina.Context;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * An Adaptor to convert information retrieved from JBoss JMX beans into internal resource model.
@@ -38,7 +39,7 @@ public class JBossResourceResolverBean implements ResourceResolver {
 
     protected Log logger = LogFactory.getLog(getClass());
 
-    public MBeanServer getMBeanServer() {
+    protected MBeanServer getJBossMBeanServer() {
         for (Iterator it = MBeanServerFactory.findMBeanServer(null).iterator(); it.hasNext();) {
             MBeanServer server = (MBeanServer) it.next();
             if ("jboss".equals(server.getDefaultDomain())) {
@@ -56,7 +57,7 @@ public class JBossResourceResolverBean implements ResourceResolver {
 
         List resources = new ArrayList();
 
-        MBeanServer server = getMBeanServer();
+        MBeanServer server = getJBossMBeanServer();
         if (server != null) {
             try {
                 Set dsNames = server.queryNames(new ObjectName("jboss.jca:service=ManagedConnectionPool,*"), null);
@@ -128,12 +129,11 @@ public class JBossResourceResolverBean implements ResourceResolver {
     public boolean resetResource(Context context, String resourceName) throws NamingException {
         try {
             ObjectName poolOName = new ObjectName("jboss.jca:service=ManagedConnectionPool,name="+resourceName);
-            MBeanServer server = getMBeanServer();
+            MBeanServer server = getJBossMBeanServer();
             if (server != null) {
                 try {
                     server.invoke(poolOName, "stop", null, null);
                     server.invoke(poolOName, "start", null, null);
-                    return true;
                 } catch (Exception e) {
                     logger.error("Could not reset resource \""+resourceName+"\"", e);
                     return false;
