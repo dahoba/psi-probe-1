@@ -8,24 +8,24 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
-package com.googlecode.psiprobe.controllers.connectors;
+package com.googlecode.psiprobe.controllers;
 
-import com.googlecode.psiprobe.beans.ContainerListenerBean;
-import com.googlecode.psiprobe.controllers.TomcatContainerController;
+import com.googlecode.psiprobe.beans.JvmMemoryInfoAccessorBean;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-public class ListConnectorNamesController extends TomcatContainerController {
-    private ContainerListenerBean containerListenerBean;
+public class MemoryStatsController extends ParameterizableViewController {
+    private JvmMemoryInfoAccessorBean jvmMemoryInfoAccessorBean;
     private long collectionPeriod;
 
-    public ContainerListenerBean getContainerListenerBean() {
-        return containerListenerBean;
+    public JvmMemoryInfoAccessorBean getJvmMemoryInfoAccessorBean() {
+        return jvmMemoryInfoAccessorBean;
     }
 
-    public void setContainerListenerBean(ContainerListenerBean containerListenerBean) {
-        this.containerListenerBean = containerListenerBean;
+    public void setJvmMemoryInfoAccessorBean(JvmMemoryInfoAccessorBean jvmMemoryInfoAccessorBean) {
+        this.jvmMemoryInfoAccessorBean = jvmMemoryInfoAccessorBean;
     }
 
     public long getCollectionPeriod() {
@@ -38,7 +38,7 @@ public class ListConnectorNamesController extends TomcatContainerController {
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return new ModelAndView(getViewName())
-                .addObject("names", containerListenerBean.getThreadPoolNames())
+                .addObject("pools", getJvmMemoryInfoAccessorBean().getPools())
                 .addObject("collectionPeriod", new Long(getCollectionPeriod()));
     }
 }

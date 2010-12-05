@@ -36,7 +36,6 @@ public class ConnectorStatsCollectorBean extends AbstractStatsCollectorBean {
             buildDeltaStats(statName + ".errors", pool.getErrorCount());
             buildDeltaStats(statName + ".sent", pool.getBytesSent());
             buildDeltaStats(statName + ".received", pool.getBytesReceived());
-            buildDeltaStats(statName + ".proc_time", pool.getProcessingTime());
             buildAbsoluteStats(statName + ".threads_busy", pool.getCurrentThreadsBusy());
         }
     }
@@ -55,7 +54,6 @@ public class ConnectorStatsCollectorBean extends AbstractStatsCollectorBean {
         resetStats(statName + ".errors");
         resetStats(statName + ".sent");
         resetStats(statName + ".received");
-        resetStats(statName + ".proc_time");
         resetStats(statName + ".threads_busy");
     }
 
