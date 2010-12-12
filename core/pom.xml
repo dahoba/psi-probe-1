@@ -6,12 +6,25 @@
 	<parent>
 		<groupId>com.googlecode.psiprobe</groupId>
 		<artifactId>psi-probe</artifactId>
-		<version>2.2.0-SNAPSHOT</version>
+		<version>2.1.2</version>
 	</parent>
 	<groupId>com.googlecode.psiprobe</groupId>
 	<artifactId>core</artifactId>
 	<packaging>jar</packaging>
 	<name>PSI Probe Core</name>
+	<repositories>
+		<!-- Required for jta -->
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+			<id>download.java.net</id>
+			<name>download.java.net</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 	<dependencies>
 		<!--
 			not found in any repo, you must download manually
@@ -159,6 +172,10 @@
 			<artifactId>xpp3_min</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
@@ -170,5 +187,14 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 	</dependencies>
 </project>
