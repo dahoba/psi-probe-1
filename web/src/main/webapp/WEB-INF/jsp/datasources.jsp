@@ -98,7 +98,7 @@
 
 			</c:when>
 			<c:otherwise>
-				<div class="infoMessage">
+				<div class="errorMessage">
 					<p>
 						<spring:message code="probe.jsp.datasources.empty"/>
 					</p>

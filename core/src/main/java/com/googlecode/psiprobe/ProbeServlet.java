@@ -42,7 +42,10 @@ public class ProbeServlet extends DispatcherServlet implements ContainerServlet 
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        getContainerWrapperBean().setWrapper(getWrapper());
+        ContainerWrapperBean containerWrapper = getContainerWrapperBean();
+        if (containerWrapper != null) {
+            containerWrapper.setWrapper(getWrapper());
+        }
     }
 
     protected void doDispatch(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
@@ -51,7 +54,10 @@ public class ProbeServlet extends DispatcherServlet implements ContainerServlet 
     }
 
     public void destroy() {
-        getContainerWrapperBean().setWrapper(null);
+        ContainerWrapperBean containerWrapper = getContainerWrapperBean();
+        if (containerWrapper != null) {
+            containerWrapper.setWrapper(null);
+        }
         super.destroy();
     }
 

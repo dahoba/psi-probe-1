@@ -63,21 +63,14 @@ public class ViewXMLConfController extends ContextHandlerController {
         }
 
         String xmlPath;
-        File xmlFile = null;
         ModelAndView mv = new ModelAndView(getViewName());
 
         if (TARGET_WEB_XML.equals(displayTarget)) {
             ServletContext sctx = context.getServletContext();
             xmlPath = sctx.getRealPath("/WEB-INF/web.xml");
-            xmlFile = new File(xmlPath);
             mv.addObject("fileDesc", getMessageSourceAccessor().getMessage("probe.src.app.viewxmlconf.webxml.desc"));
         } else if (TARGET_CONTEXT_XML.equals(displayTarget)) {
-            xmlFile = getContainerWrapper().getTomcatContainer().getConfigFile(context);
-            if (xmlFile != null) {
-                xmlPath = xmlFile.getPath();
-            } else {
-                xmlPath = null;
-            }
+            xmlPath = context.getConfigFile();
             mv.addObject("fileDesc", getMessageSourceAccessor().getMessage("probe.src.app.viewxmlconf.contextxml.desc"));
         } else {
             throw new RuntimeException("Unknown display target " + getDisplayTarget());
@@ -86,7 +79,8 @@ public class ViewXMLConfController extends ContextHandlerController {
         mv.addObject("displayTarget", displayTarget);
         mv.addObject("downloadUrl", downloadUrl);
 
-        if (xmlFile != null) {
+        if (xmlPath != null) {
+            File xmlFile = new File(xmlPath);
             mv.addObject("fileName", xmlFile.getName());
             if (xmlFile.exists()) {
                 FileInputStream fis = new FileInputStream(xmlFile);
