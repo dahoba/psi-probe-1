@@ -10,7 +10,6 @@
  */
 package com.googlecode.psiprobe.controllers;
 
-import com.googlecode.psiprobe.jsp.Functions;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +26,6 @@ public class RememberVisibilityController extends AbstractController {
         String cookieName = ServletRequestUtils.getStringParameter(request, "cn");
         String state = ServletRequestUtils.getStringParameter(request, "state");
         if (cookieName != null && state != null) {
-            cookieName = Functions.safeCookieName(cookieName);
             //
             // expire the cookis at the current date + 10years (roughly, nevermind leap years)
             //

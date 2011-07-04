@@ -13,7 +13,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<%@ taglib uri="/WEB-INF/tld/probe.tld" prefix="probe" %>
+<%@ taglib uri="/WEB-INF/tags/probe.tld" prefix="probe" %>
 
 <display:table name="pools" class="genericTbl" cellspacing="0" uid="pool" requestURI="">
 
@@ -46,7 +46,7 @@
 		<c:set var="cookie_name" value="mem_${pool.id}" scope="page"/>
 
 		<c:choose>
-			<c:when test="${cookie[probe:safeCookieName(cookie_name)].value == 'off'}">
+			<c:when test="${cookie[cookie_name].value == 'off'}">
 				<c:set var="style_on" value="display:none"/>
 				<c:set var="style_off" value=""/>
 			</c:when>

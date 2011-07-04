@@ -45,7 +45,7 @@ public class ResourceResolverBean implements ResourceResolver {
      */
     public static final String DEFAULT_RESOURCE_PREFIX = DEFAULT_GLOBAL_RESOURCE_PREFIX + "comp/env/";
 
-    private List datasourceMappers;
+    private List datasourceMappers = new ArrayList();
 
     public List getApplicationResources() throws NamingException {
         logger.info("Reading GLOBAL resources");

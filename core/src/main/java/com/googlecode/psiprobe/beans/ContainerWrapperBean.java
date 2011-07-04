@@ -43,7 +43,7 @@ public class ContainerWrapperBean {
     /**
      * List of class names to adapt particular Tomcat implementation to TomcatContainer interface
      */
-    private List adaptorClasses;
+    private List adaptorClasses = new ArrayList();
 
     private ResourceResolver resourceResolver;
 
@@ -67,7 +67,7 @@ public class ContainerWrapperBean {
                 if (tomcatContainer == null) {
 
                     String serverInfo = ServerInfo.getServerInfo();
-                    logger.info("Server info: " + serverInfo);
+                    logger.debug("Server info: " + serverInfo);
                     for (int i = 0; i < adaptorClasses.size(); i++) {
                         String className = (String) adaptorClasses.get(i);
                         try {
@@ -86,11 +86,7 @@ public class ContainerWrapperBean {
                                 logger.error(className + " does not implement " + TomcatContainer.class.getName());
                             }
                         } catch (Throwable e) {
-                            if (logger.isDebugEnabled()) {
-                                logger.debug("Failed to load " + className, e);
-                            } else {
-                                logger.info("Failed to load " + className);
-                            }
+                            logger.info("Failed to load " + className);
                             //
                             // make sure we always re-throw ThreadDeath
                             //

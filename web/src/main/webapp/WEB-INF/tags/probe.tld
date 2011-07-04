@@ -33,7 +33,7 @@
 		</description>
 
 		<name>duration</name>
-		<tag-class>com.googlecode.psiprobe.jsp.DurationTag</tag-class>
+		<tag-class>com.googlecode.psiprobe.tags.DurationTag</tag-class>
 		<body-content>JSP</body-content>
 
 		<attribute>
@@ -51,7 +51,7 @@
 		</description>
 
 		<name>volume</name>
-		<tag-class>com.googlecode.psiprobe.jsp.VolumeTag</tag-class>
+		<tag-class>com.googlecode.psiprobe.tags.VolumeTag</tag-class>
 		<body-content>JSP</body-content>
 
 		<attribute>
@@ -75,7 +75,7 @@
 		</description>
 
 		<name>toggle</name>
-		<tag-class>com.googlecode.psiprobe.jsp.ParamToggleTag</tag-class>
+		<tag-class>com.googlecode.psiprobe.tags.ParamToggleTag</tag-class>
 		<body-content>JSP</body-content>
 
 		<attribute>
@@ -93,7 +93,7 @@
 		</description>
 
 		<name>addQueryParam</name>
-		<tag-class>com.googlecode.psiprobe.jsp.AddQueryParamTag</tag-class>
+		<tag-class>com.googlecode.psiprobe.tags.AddQueryParamTag</tag-class>
 		<body-content>JSP</body-content>
 
 		<attribute>
@@ -117,7 +117,7 @@
 		</description>
 
 		<name>out</name>
-		<tag-class>com.googlecode.psiprobe.jsp.OutTag</tag-class>
+		<tag-class>com.googlecode.psiprobe.tags.OutTag</tag-class>
 		<body-content>JSP</body-content>
 
 		<attribute>
@@ -141,7 +141,7 @@
 
 	<tag>
 		<name>score</name>
-		<tag-class>com.googlecode.psiprobe.jsp.VisualScoreTag</tag-class>
+		<tag-class>com.googlecode.psiprobe.tags.VisualScoreTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>value</name>
@@ -202,20 +202,6 @@
 		<name>escapeJS</name>
 		<function-class>org.springframework.web.util.JavaScriptUtils</function-class>
 		<function-signature>java.lang.String javaScriptEscape(java.lang.String)</function-signature>
-	</function>
-
-	<function>
-		<display-name>escapeHtml</display-name>
-		<name>escapeHtml</name>
-		<function-class>org.springframework.web.util.HtmlUtils</function-class>
-		<function-signature>java.lang.String htmlEscape(java.lang.String)</function-signature>
-	</function>
-
-	<function>
-		<display-name>safeCookieName</display-name>
-		<name>safeCookieName</name>
-		<function-class>com.googlecode.psiprobe.jsp.Functions</function-class>
-		<function-signature>java.lang.String safeCookieName(java.lang.String)</function-signature>
 	</function>
 
 </taglib>
