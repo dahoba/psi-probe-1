@@ -80,6 +80,7 @@ public abstract class AbstractStatsCollectorBean {
             stats = statsCollection.newStats(name, maxSeries);
         } else {
             XYDataItem data = new XYDataItem(time, value);
+            StatsCollectionEvent event = new StatsCollectionEvent(name, data);
             statsCollection.lockForUpdate();
             try {
                 stats.add(data);
@@ -88,7 +89,6 @@ public abstract class AbstractStatsCollectorBean {
                 statsCollection.releaseLock();
             }
             if (listeners != null) {
-                StatsCollectionEvent event = new StatsCollectionEvent(name, data);
                 for (Iterator it = listeners.iterator(); it.hasNext();) {
                     Object o = it.next();
                     if (o instanceof StatsCollectionListener) {

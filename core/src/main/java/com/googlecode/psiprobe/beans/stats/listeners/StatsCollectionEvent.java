@@ -29,10 +29,6 @@ public class StatsCollectionEvent {
         this.data = data;
     }
 
-    public StatsCollectionEvent(String name, long x, long y) {
-        this(name, new XYDataItem(x, y));
-    }
-
     public String getName() {
         return name;
     }
