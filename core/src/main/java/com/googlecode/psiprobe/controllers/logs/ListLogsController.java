@@ -18,11 +18,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class ListLogsController extends ParameterizableViewController {
 
     private String errorView;

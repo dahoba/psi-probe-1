@@ -18,10 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.mvc.Controller;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class BeanToXmlController extends AbstractController {
 
     private String xmlMarker = ".oxml";

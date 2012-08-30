@@ -18,11 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.ServletRequestUtils;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class AddQueryParamTag extends TagSupport {
 
     private Log logger = LogFactory.getLog(getClass());
@@ -41,7 +36,7 @@ public class AddQueryParamTag extends TagSupport {
         try {
             pageContext.getOut().print(query);
         } catch (IOException e) {
-            logger.debug("Exception printing query string to JspWriter", e);
+            logger.debug(e);
             throw new JspException(e);
         }
         return EVAL_BODY_INCLUDE;

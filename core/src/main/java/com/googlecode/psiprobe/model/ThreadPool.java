@@ -12,9 +12,8 @@ package com.googlecode.psiprobe.model;
 
 /**
  * POJO representing thread pool
- * 
+ *
  * @author Vlad Ilyushchenko
- * @author Mark Lewis
  */
 public class ThreadPool {
 

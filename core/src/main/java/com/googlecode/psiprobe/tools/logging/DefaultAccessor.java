@@ -16,12 +16,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
-public class DefaultAccessor {
+public class DefaultAccessor  {
 
     protected final Log log = LogFactory.getLog(getClass());
     private Application application;
@@ -51,7 +46,7 @@ public class DefaultAccessor {
         try {
             return PropertyUtils.isReadable(o, name) ? PropertyUtils.getProperty(o, name) : defaultValue;
         } catch (Exception e) {
-            log.debug("Could not access property \"" + name + "\" of object " + o, e);
+            log.debug(e);
             return defaultValue;
         }
     }

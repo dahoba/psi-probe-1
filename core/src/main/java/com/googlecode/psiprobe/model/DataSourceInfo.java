@@ -14,9 +14,8 @@ import com.googlecode.psiprobe.Utils;
 
 /**
  * POJO representing a datasource.
- * 
+ *
  * @author Vlad Ilyushchenko
- * @author Mark Lewis
  */
 public class DataSourceInfo {
     private String jdbcURL;

@@ -18,18 +18,6 @@
 
 	<util:properties id="version" location="WEB-INF/version.properties" />
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations" value="WEB-INF/stats.properties" />
-		<property name="nullValue" value="NULL" />
-		<property name="properties">
-			<props>
-				<prop key="com.googlecode.psiprobe.tools.mail.to">NULL</prop>
-				<prop key="com.googlecode.psiprobe.tools.mail.subjectPrefix">[PSI Probe] </prop>
-			</props>
-		</property>
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-	</bean>
-
 	<!--
 		Helper bean to read datasource information into Probe data model.
 	-->
@@ -64,11 +52,6 @@
 		Helper class to allow Probe controllers to access Tomcat.
 	-->
 	<bean id="containerWrapper" class="com.googlecode.psiprobe.beans.ContainerWrapperBean">
-		<!--
-			Setting this property to true will override the server polling each
-			adaptor performs to test for compatibility.  Instead, it will use
-			the first one in the list below.  Reorder those values if necessary.
-		-->
 		<property name="forceFirstAdaptor" value="false"/>
 		<property name="adaptorClasses">
 			<list>
@@ -89,15 +72,6 @@
 	<bean id="containerListener" class="com.googlecode.psiprobe.beans.ContainerListenerBean">
 		<property name="containerWrapper">
 			<ref bean="containerWrapper"/>
-		</property>
-	</bean>
-
-	<bean id="mailer" class="com.googlecode.psiprobe.tools.Mailer">
-		<property name="defaultTo">
-			<value>${com.googlecode.psiprobe.tools.mail.to}</value>
-		</property>
-		<property name="subjectPrefix">
-			<value>${com.googlecode.psiprobe.tools.mail.subjectPrefix}</value>
 		</property>
 	</bean>
 

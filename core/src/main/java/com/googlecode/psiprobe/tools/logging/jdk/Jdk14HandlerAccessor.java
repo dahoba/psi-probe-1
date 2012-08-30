@@ -13,11 +13,6 @@ package com.googlecode.psiprobe.tools.logging.jdk;
 import com.googlecode.psiprobe.tools.logging.AbstractLogDestination;
 import org.apache.commons.beanutils.MethodUtils;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class Jdk14HandlerAccessor extends AbstractLogDestination {
 
     private Jdk14LoggerAccessor loggerAccessor;
@@ -74,7 +69,7 @@ public class Jdk14HandlerAccessor extends AbstractLogDestination {
             Object newLevel = MethodUtils.invokeMethod(level, "parse", newLevelStr);
             MethodUtils.invokeMethod(getTarget(), "setLevel", newLevel);
         } catch (Exception e) {
-            log.error(getTarget().getClass().getName() + "#setLevel(\"" + newLevelStr + "\") failed", e);
+            log.error(getTarget() + ".setLevel(\"" + newLevelStr + "\") failed", e);
         }
     }
 

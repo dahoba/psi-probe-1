@@ -19,10 +19,6 @@ import org.apache.catalina.Context;
 /**
  * Interface of beans that retrieve information about "resources" of application server. Typically those resources would
  * be datasources.
- * 
- * @author Vlad Ilyushchenko
- * @author Andy Shapoval
- * @author Mark Lewis
  */
 public interface ResourceResolver {
 

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.psiprobe</groupId>
 	<artifactId>psi-probe</artifactId>
-	<version>2.4.0-SNAPSHOT</version>
+	<version>2.3.2</version>
 	<packaging>pom</packaging>
 	<name>PSI Probe</name>
 	<url>http://psi-probe.googlecode.com/</url>
@@ -37,23 +37,35 @@
 			<post>psi-probe-discuss@googlegroups.com</post>
 			<archive>http://groups.google.com/group/psi-probe-discuss/</archive>
 		</mailingList>
+		<mailingList>
+			<name>PSI Probe Issues</name>
+			<subscribe>psi-probe-issues+subscribe@googlegroups.com</subscribe>
+			<unsubscribe>psi-probe-issues+unsubscribe@googlegroups.com</unsubscribe>
+			<archive>http://groups.google.com/group/psi-probe-issues/</archive>
+		</mailingList>
+		<mailingList>
+			<name>PSI Probe Subversion</name>
+			<subscribe>psi-probe-svn+subscribe@googlegroups.com</subscribe>
+			<unsubscribe>psi-probe-svn+unsubscribe@googlegroups.com</unsubscribe>
+			<archive>http://groups.google.com/group/psi-probe-svn/</archive>
+		</mailingList>
 	</mailingLists>
 	<scm>
-		<connection>scm:svn:http://psi-probe.googlecode.com/svn/trunk/</connection>
-		<developerConnection>scm:svn:https://psi-probe.googlecode.com/svn/trunk/</developerConnection>
-		<url>http://code.google.com/p/psi-probe/source/browse/trunk/</url>
+		<connection>scm:svn:http://psi-probe.googlecode.com/svn/branches/2.3/</connection>
+		<developerConnection>scm:svn:https://psi-probe.googlecode.com/svn/branches/2.3/</developerConnection>
+		<url>http://code.google.com/p/psi-probe/source/browse/branches/2.3/</url>
 	</scm>
 	<modules>
 		<module>core</module>
-		<module>tomcat50adaptor</module>
-		<module>tomcat55adaptor</module>
-		<module>tomcat60adaptor</module>
 		<module>tomcat70adaptor</module>
+		<module>tomcat60adaptor</module>
+		<module>tomcat55adaptor</module>
+		<module>tomcat50adaptor</module>
 		<module>web</module>
 	</modules>
 	<repositories>
 		<repository>
-			<!-- Required for jfreechart -->
+			<!-- required for jfreechart -->
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -66,8 +78,8 @@
 			<url>https://m2proxy.atlassian.com/repository/public</url>
 			<layout>default</layout>
 		</repository>
+		<!-- Required for jta -->
 		<repository>
-			<!-- Required for jta -->
 			<snapshots>
 				<enabled>false</enabled>
 				<updatePolicy>never</updatePolicy>
@@ -77,8 +89,8 @@
 			<url>http://download.java.net/maven/2/</url>
 			<layout>default</layout>
 		</repository>
+		<!-- Required for jmxri -->
 		<repository>
-			<!-- Required for jmxri -->
 			<snapshots>
 				<enabled>false</enabled>
 				<updatePolicy>never</updatePolicy>
@@ -235,38 +247,6 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>jaxen</groupId>
-				<artifactId>jaxen</artifactId>
-				<version>1.1.1</version>
-				<exclusions>
-					<exclusion>
-						<groupId>dom4j</groupId>
-						<artifactId>dom4j</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>jdom</groupId>
-						<artifactId>jdom</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xerces</groupId>
-						<artifactId>xercesImpl</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xom</groupId>
-						<artifactId>xom</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xml-apis</groupId>
-						<artifactId>xml-apis</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>2.5.6.SEC01</version>
-			</dependency>
-			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>2.5.6.SEC01</version>
@@ -280,21 +260,6 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
 				<version>2.5.6.SEC01</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-core</artifactId>
-				<version>2.0.7.RELEASE</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-core</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-support</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>javainetlocator</groupId>
@@ -371,7 +336,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.4.3</version>
 					<configuration>
 						<includes>
 							<include>**/*Tests.java</include>
@@ -384,7 +348,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.0.2</version>
 					<configuration>
 						<source>1.4</source>
 						<target>1.4</target>
@@ -402,28 +365,10 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.2</version>
 					<configuration>
 						<archive>
 							<manifest>
 								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>2.1-alpha-2</version>
-					<configuration>
-						<excludes>**/test/**,**/.svn/**</excludes>
-						<archive>
-							<manifestEntries>
-								<Implementation-Build>${probe.version}</Implementation-Build>
-							</manifestEntries>
-							<manifest>
-								<addClasspath>true</addClasspath>
-								<classpathPrefix>lib/</classpathPrefix>
 							</manifest>
 						</archive>
 					</configuration>
@@ -448,32 +393,25 @@
 						<timestampFormat>{0,date,yyyy-MM-dd HH:mm Z}</timestampFormat>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo.jspc</groupId>
-					<artifactId>jspc-maven-plugin</artifactId>
-					<version>2.0-alpha-3</version>
-					<configuration>
-						<compile>false</compile>
-						<includeInProject>false</includeInProject>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>compile</goal>
-							</goals>
-						</execution>
-					</executions>
-					<dependencies>
-						<dependency>
-							<groupId>org.codehaus.mojo.jspc</groupId>
-							<artifactId>jspc-compiler-tomcat5</artifactId>
-							<version>2.0-alpha-3</version>
-						</dependency>
-					</dependencies>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>

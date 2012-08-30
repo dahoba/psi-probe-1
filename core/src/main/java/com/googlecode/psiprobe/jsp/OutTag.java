@@ -16,11 +16,6 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import org.apache.commons.lang.StringEscapeUtils;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class OutTag extends BodyTagSupport {
 
     private int maxLength = -1;

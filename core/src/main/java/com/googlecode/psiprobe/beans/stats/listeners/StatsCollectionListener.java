@@ -17,6 +17,5 @@ package com.googlecode.psiprobe.beans.stats.listeners;
 public interface StatsCollectionListener {
 
     void statsCollected(StatsCollectionEvent sce);
-    boolean isEnabled();
 
 }

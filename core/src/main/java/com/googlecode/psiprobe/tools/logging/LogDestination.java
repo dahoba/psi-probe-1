@@ -14,11 +14,6 @@ import com.googlecode.psiprobe.model.Application;
 import java.io.File;
 import java.sql.Timestamp;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public interface LogDestination {
     Application getApplication();
     boolean isRoot();

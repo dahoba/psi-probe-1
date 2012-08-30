@@ -15,10 +15,6 @@ import com.googlecode.psiprobe.model.jmx.MemoryPool;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class JvmMemoryStatsCollectorBean extends AbstractStatsCollectorBean {
     private JvmMemoryInfoAccessorBean jvmMemoryInfoAccessor;
 

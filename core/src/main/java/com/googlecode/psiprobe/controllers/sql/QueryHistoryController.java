@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
  * 
  * @author Andy Shapoval
  */
+
 public class QueryHistoryController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession sess = request.getSession(false);

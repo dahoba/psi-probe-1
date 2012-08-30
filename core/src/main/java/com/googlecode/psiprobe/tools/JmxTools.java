@@ -19,10 +19,6 @@ import javax.management.openmbean.CompositeData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class JmxTools {
 
     private static Log logger = LogFactory.getLog(JmxTools.class);

@@ -20,10 +20,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class DisplayJspController extends ContextHandlerController {
 
     public static final String SUMMARY_ATTRIBUTE = "jsp.summary";

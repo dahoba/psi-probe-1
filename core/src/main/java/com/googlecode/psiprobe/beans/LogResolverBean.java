@@ -140,10 +140,7 @@ public class LogResolverBean {
             // interrogate webapp classloaders and avilable loggers
             //
             List contexts = getContainerWrapper().getTomcatContainer().findContexts();
-            for (int i = 0; i < contexts.size(); i++) {
-                Context ctx = (Context) contexts.get(i);
-                interrogateContext(ctx, allAppenders);
-            }
+            interrogateApplicationClassLoaders(contexts, allAppenders);
 
             return allAppenders;
         }
@@ -198,46 +195,51 @@ public class LogResolverBean {
         return null;
     }
 
-    private void interrogateContext(Context ctx, List allAppenders) {
-        Application application = ApplicationUtils.getApplication(ctx);
-        ClassLoader cl = ctx.getLoader().getClassLoader();
+    private void interrogateApplicationClassLoaders(List contexts, List allAppenders) {
+        for (int i = 0; i < contexts.size(); i++) {
 
-        try {
-            Object contextLogger = getContainerWrapper().getTomcatContainer().getLogger(ctx);
-            if (contextLogger != null) {
-                if (contextLogger.getClass().getName().startsWith("org.apache.commons.logging")) {
-                    CommonsLoggerAccessor commonsAccessor = new CommonsLoggerAccessor();
-                    commonsAccessor.setTarget(contextLogger);
-                    commonsAccessor.setApplication(application);
-                    allAppenders.addAll(commonsAccessor.getDestinations());
-                } else if (contextLogger.getClass().getName().startsWith("org.apache.catalina.logger")) {
-                    CatalinaLoggerAccessor catalinaAccessor = new CatalinaLoggerAccessor();
-                    catalinaAccessor.setApplication(application);
-                    catalinaAccessor.setTarget(contextLogger);
-                    allAppenders.add(catalinaAccessor);
+            Context ctx = (Context) contexts.get(i);
+            Application application = ApplicationUtils.getApplication(ctx);
+
+            ClassLoader cl = ctx.getLoader().getClassLoader();
+
+            try {
+                Object contextLogger = getContainerWrapper().getTomcatContainer().getLogger(ctx);
+                if (contextLogger != null) {
+                    if (contextLogger.getClass().getName().startsWith("org.apache.commons.logging")) {
+                        CommonsLoggerAccessor commonsAccessor = new CommonsLoggerAccessor();
+                        commonsAccessor.setTarget(contextLogger);
+                        commonsAccessor.setApplication(application);
+                        allAppenders.addAll(commonsAccessor.getDestinations());
+                    } else if (contextLogger.getClass().getName().startsWith("org.apache.catalina.logger")) {
+                        CatalinaLoggerAccessor catalinaAccessor = new CatalinaLoggerAccessor();
+                        catalinaAccessor.setApplication(application);
+                        catalinaAccessor.setTarget(contextLogger);
+                        allAppenders.add(catalinaAccessor);
+                    }
+                }
+            } catch (Throwable e) {
+                logger.error("Could not interrogate context logger for " + ctx.getName() + ". Enable debug logging to see the trace stack");
+                logger.debug(e);
+                //
+                // make sure we always re-throw ThreadDeath
+                //
+                if (e instanceof ThreadDeath) {
+                    throw (ThreadDeath) e;
                 }
             }
-        } catch (Throwable e) {
-            logger.error("Could not interrogate context logger for " + ctx.getName() + ". Enable debug logging to see the trace stack");
-            logger.debug("  Stack trace:", e);
-            //
-            // make sure we always re-throw ThreadDeath
-            //
-            if (e instanceof ThreadDeath) {
-                throw (ThreadDeath) e;
-            }
-        }
 
-        if (application.isAvailable()) {
-            ClassLoader prevCl = ClassUtils.overrideThreadContextClassLoader(cl);
-            try {
-                interrogateClassLoader(cl, application, allAppenders);
-            } catch (Exception e) {
-                logger.error("Could not interrogate classloader loggers for " + ctx.getName() + ". Enable debug logging to see the trace stack");
-                logger.debug("  Stack trace:", e);
-            } finally {
-                if (prevCl != null) {
-                    ClassUtils.overrideThreadContextClassLoader(prevCl);
+            if (application.isAvailable()) {
+                ClassLoader prevCl = ClassUtils.overrideThreadContextClassLoader(cl);
+                try {
+                    interrogateClassLoader(cl, application, allAppenders);
+                } catch (Exception e) {
+                    logger.error("Could not interrogate classloader loggers for " + ctx.getName() + ". Enable debug logging to see the trace stack");
+                    logger.debug(e);
+                } finally {
+                    if (prevCl != null) {
+                        ClassUtils.overrideThreadContextClassLoader(prevCl);
+                    }
                 }
             }
         }
@@ -273,7 +275,7 @@ public class LogResolverBean {
             if (t instanceof ThreadDeath) {
                 throw (ThreadDeath) t;
             }
-            logger.debug("Could not resolve log4j loggers for " + applicationName, t);
+            logger.debug("Could not resolve JDK loggers for " + applicationName, t);
         }
 
         // check for Logback loggers
@@ -288,40 +290,36 @@ public class LogResolverBean {
             if (t instanceof ThreadDeath) {
                 throw (ThreadDeath) t;
             }
-            logger.debug("Could not resolve logback loggers for " + applicationName, t);
+            logger.debug("Could not resolve JDK loggers for " + applicationName, t);
         }
     }
 
     private void interrogateStdOutFiles(List appenders) {
         for (Iterator it = stdoutFiles.iterator(); it.hasNext(); ) {
             String fileName = (String) it.next();
-            FileLogAccessor fla = resolveStdoutLogDestination(fileName);
-            if (fla != null) {
+            File stdout = new File(System.getProperty("catalina.base"), "logs/" + fileName);
+            if (stdout.exists()) {
+                FileLogAccessor fla = new FileLogAccessor();
+                fla.setName(fileName);
+                fla.setFile(stdout);
                 appenders.add(fla);
             }
         }
+
     }
 
     private LogDestination getStdoutLogDestination(String logName) {
         for (Iterator it = stdoutFiles.iterator(); it.hasNext(); ) {
             String fileName = (String) it.next();
             if (fileName.equals(logName)) {
-                FileLogAccessor fla = resolveStdoutLogDestination(fileName);
-                if (fla != null) {
+                File stdout = new File(System.getProperty("catalina.base"), "logs/" + logName);
+                if (stdout.exists()) {
+                    FileLogAccessor fla = new FileLogAccessor();
+                    fla.setName(fileName);
+                    fla.setFile(stdout);
                     return fla;
                 }
             }
-        }
-        return null;
-    }
-
-    private FileLogAccessor resolveStdoutLogDestination(String fileName) {
-        File stdout = new File(System.getProperty("catalina.base"), "logs/" + fileName);
-        if (stdout.exists()) {
-            FileLogAccessor fla = new FileLogAccessor();
-            fla.setName(fileName);
-            fla.setFile(stdout);
-            return fla;
         }
         return null;
     }
@@ -419,10 +417,10 @@ public class LogResolverBean {
             if (all) {
                 Application a1 = d1.getApplication();
                 Application a2 = d2.getApplication();
-                if (a1 == null || a2 == null) {
-                    a1 = null;
-                    a2 = null;
-                }
+            if (a1 == null || a2 == null) {
+                a1 = null;
+                a2 = null;
+            }
                 String appName1 = (a1 == null ? "" : a1.getName());
                 String appName2 = (a2 == null ? "" : a2.getName());
                 String context1 = (d1.isContext() ? "is" : "not");
