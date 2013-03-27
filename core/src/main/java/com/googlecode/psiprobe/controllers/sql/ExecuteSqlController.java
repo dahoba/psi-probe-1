@@ -36,8 +36,6 @@ import org.springframework.web.util.HtmlUtils;
  * connectivity. Displays results returned by the query.
  * 
  * @author Andy Shapoval
- * @author Mark Lewis
- * @author jackdimm
  */
 public class ExecuteSqlController extends ContextHandlerController {
 

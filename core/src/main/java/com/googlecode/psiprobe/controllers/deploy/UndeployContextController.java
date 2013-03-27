@@ -20,9 +20,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Undeploys a web application.
- * 
+ *
  * @author Vlad Ilyushchenko
- * @author Andy Shapoval
  */
 public class UndeployContextController extends ContextHandlerController {
     private String failureViewName = null;

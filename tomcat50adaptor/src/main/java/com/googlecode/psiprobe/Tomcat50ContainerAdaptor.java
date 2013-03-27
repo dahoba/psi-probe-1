@@ -22,10 +22,6 @@ import org.apache.catalina.Host;
 import org.apache.catalina.Valve;
 import org.apache.catalina.Wrapper;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class Tomcat50ContainerAdaptor extends AbstractTomcatContainer {
 
     private Deployer deployer;

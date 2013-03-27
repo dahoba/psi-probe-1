@@ -37,7 +37,6 @@ import org.apache.commons.logging.LogFactory;
  * class essentially provides and maintains the list of connection ThreadPools.
  * 
  * @author Vlad Ilyushchenko
- * @author Mark Lewis
  */
 public class ContainerListenerBean implements NotificationListener {
 
@@ -210,7 +209,7 @@ public class ContainerListenerBean implements NotificationListener {
                 }
             } catch (InstanceNotFoundException e) {
                 logger.error("Failed to query entire thread pool " + threadPoolObjectName);
-                logger.debug("  Stack trace:", e);
+                logger.debug(e);
             }
         }
         return threadPools;
@@ -290,7 +289,7 @@ public class ContainerListenerBean implements NotificationListener {
                             connector.addRequestProcessor(rp);
                         } catch (InstanceNotFoundException e) {
                             logger.info("Failed to query RequestProcessor " + wrkName);
-                            logger.debug("  Stack trace:", e);
+                            logger.debug(e);
                         }
                     }
                 }
@@ -298,7 +297,7 @@ public class ContainerListenerBean implements NotificationListener {
                 connectors.add(connector);
             } catch (InstanceNotFoundException e) {
                 logger.error("Failed to query entire thread pool " + threadPoolObjectName);
-                logger.debug("  Stack trace:", e);
+                logger.debug(e);
             }
         }
         return connectors;

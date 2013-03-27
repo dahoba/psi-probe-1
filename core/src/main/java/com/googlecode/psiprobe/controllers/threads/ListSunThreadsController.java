@@ -24,10 +24,6 @@ import org.apache.commons.modeler.Registry;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class ListSunThreadsController extends ParameterizableViewController {
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {

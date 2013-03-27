@@ -32,6 +32,7 @@ public class LogOutputStream extends OutputStream {
 
     private Log log;
     private int level;
+    private boolean shouldWrite;
     private StringBuffer buf = new StringBuffer();
 
     /**
@@ -60,24 +61,25 @@ public class LogOutputStream extends OutputStream {
      * @throws IllegalArgumentException
      *         if {@code log} is null
      */
-    private LogOutputStream(Log log, int level) {
+    public LogOutputStream(Log log, int level) {
         if (log == null) {
             throw new IllegalArgumentException("Log cannot be null");
         } else {
             this.log = log;
         }
         this.level = level;
+        this.shouldWrite = shouldWrite();
     }
 
     /**
      * Flushes the contents of this stream to its {@link Log}.
      */
     public void flush() {
-        if (shouldWrite()) {
+        if (shouldWrite) {
             String message = buf.toString();
             log(message);
+            buf.setLength(0);
         }
-        buf.setLength(0);
     }
 
     /**
@@ -87,8 +89,8 @@ public class LogOutputStream extends OutputStream {
      *        the {@code byte} to write
      */
     public void write(int b) {
-        if (shouldWrite()) {
-            char c = (char) b;
+        if (shouldWrite) {
+            char c = (char) (b & 0xFF);
             buf.append(c);
         }
     }

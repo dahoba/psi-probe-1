@@ -16,11 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class MemoryStatsController extends ParameterizableViewController {
     private JvmMemoryInfoAccessorBean jvmMemoryInfoAccessorBean;
     private long collectionPeriod;

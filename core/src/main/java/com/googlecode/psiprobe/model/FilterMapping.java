@@ -15,6 +15,7 @@ package com.googlecode.psiprobe.model;
  * 
  * @author Andy Shapoval
  */
+
 public class FilterMapping {
     private String url;
     private String servletName;

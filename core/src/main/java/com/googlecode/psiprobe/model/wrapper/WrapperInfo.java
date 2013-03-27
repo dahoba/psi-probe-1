@@ -12,10 +12,6 @@ package com.googlecode.psiprobe.model.wrapper;
 
 import java.util.Set;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class WrapperInfo {
     private String user;
     private String interactiveUser;

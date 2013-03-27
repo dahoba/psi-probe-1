@@ -19,11 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class Instruments {
 
     public static final long SIZE_VOID = 0;

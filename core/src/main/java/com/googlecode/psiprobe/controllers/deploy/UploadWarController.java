@@ -34,7 +34,6 @@ import org.springframework.web.servlet.view.InternalResourceView;
  * Uploads and installs web application from a .WAR.
  * 
  * @author Vlad Ilyushchenko
- * @author Mark Lewis
  */
 public class UploadWarController extends TomcatContainerController {
 

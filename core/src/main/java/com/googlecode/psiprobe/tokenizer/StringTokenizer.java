@@ -13,10 +13,6 @@ package com.googlecode.psiprobe.tokenizer;
 import java.io.IOException;
 import java.io.StringReader;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class StringTokenizer extends Tokenizer {
 
     public StringTokenizer() {

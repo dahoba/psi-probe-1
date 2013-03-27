@@ -15,12 +15,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class Jdk14LoggerAccessor extends DefaultAccessor {
 
     private boolean context = false;
@@ -28,7 +24,7 @@ public class Jdk14LoggerAccessor extends DefaultAccessor {
     public List getHandlers() {
         List handlerAccessors = new ArrayList();
         try {
-            Object handlers[] = (Object[]) MethodUtils.invokeMethod(getTarget(), "getHandlers", null);
+            Object handlers[] = (Object[]) PropertyUtils.getProperty(getTarget(), "handlers");
             for (int h = 0; h < handlers.length; h++) {
                 Object handler = handlers[h];
                 Jdk14HandlerAccessor handlerAccessor = wrapHandler(handler, h);
@@ -37,7 +33,7 @@ public class Jdk14LoggerAccessor extends DefaultAccessor {
                 }
             }
         } catch (Exception e) {
-            log.error(getTarget().getClass().getName() + "#handlers inaccessible", e);
+            log.error(getTarget() + "#handlers inaccessible", e);
         }
         return handlerAccessors;
     }
@@ -75,10 +71,10 @@ public class Jdk14LoggerAccessor extends DefaultAccessor {
 
     public Jdk14HandlerAccessor getHandler(int index) {
         try {
-            Object handlers[] = (Object[]) MethodUtils.invokeMethod(getTarget(), "getHandlers", null);
+            Object handlers[] = (Object[]) PropertyUtils.getProperty(getTarget(), "handlers");
             return wrapHandler(handlers[index], index);
         } catch (Exception e) {
-            log.error(getTarget().getClass().getName() + "#handlers inaccessible", e);
+            log.error(getTarget() + "#handlers inaccessible", e);
         }
         return null;
     }
@@ -97,7 +93,7 @@ public class Jdk14LoggerAccessor extends DefaultAccessor {
                 return (String) MethodUtils.invokeMethod(level, "getName", null);
             }
         } catch (Exception e) {
-            log.error(getTarget().getClass().getName() + "#getLevel() failed", e);
+            log.error(getTarget() + ".getLevel() failed", e);
         }
         return null;
     }
@@ -109,7 +105,7 @@ public class Jdk14LoggerAccessor extends DefaultAccessor {
             Object newLevel = parse.invoke(null, new Object[] {newLevelStr});
             MethodUtils.invokeMethod(getTarget(), "setLevel", newLevel);
         } catch (Exception e) {
-            log.error(getTarget().getClass().getName() + "#setLevel(\"" + newLevelStr + "\") failed", e);
+            log.error(getTarget() + ".setLevel(\"" + newLevelStr + "\") failed", e);
         }
     }
 

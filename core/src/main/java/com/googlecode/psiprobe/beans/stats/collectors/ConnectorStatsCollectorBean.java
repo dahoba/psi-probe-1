@@ -15,11 +15,6 @@ import com.googlecode.psiprobe.model.Connector;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class ConnectorStatsCollectorBean extends AbstractStatsCollectorBean {
 
     private ContainerListenerBean listenerBean;

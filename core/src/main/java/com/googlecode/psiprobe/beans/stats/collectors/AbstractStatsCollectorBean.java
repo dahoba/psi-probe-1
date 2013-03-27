@@ -20,12 +20,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import org.jfree.data.xy.XYDataItem;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Andy Shapoval
- * @author Mark Lewis
- */
 public abstract class AbstractStatsCollectorBean {
 
     private StatsCollection statsCollection;
@@ -86,6 +80,7 @@ public abstract class AbstractStatsCollectorBean {
             stats = statsCollection.newStats(name, maxSeries);
         } else {
             XYDataItem data = new XYDataItem(time, value);
+            StatsCollectionEvent event = new StatsCollectionEvent(name, data);
             statsCollection.lockForUpdate();
             try {
                 stats.add(data);
@@ -94,14 +89,11 @@ public abstract class AbstractStatsCollectorBean {
                 statsCollection.releaseLock();
             }
             if (listeners != null) {
-                StatsCollectionEvent event = new StatsCollectionEvent(name, data);
                 for (Iterator it = listeners.iterator(); it.hasNext();) {
                     Object o = it.next();
                     if (o instanceof StatsCollectionListener) {
                         StatsCollectionListener listener = (StatsCollectionListener) o;
-                        if (listener.isEnabled()) {
-                            listener.statsCollected(event);
-                        }
+                        listener.statsCollected(event);
                     }
                 }
             }

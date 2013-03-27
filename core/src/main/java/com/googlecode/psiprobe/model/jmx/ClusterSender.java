@@ -10,10 +10,6 @@
  */
 package com.googlecode.psiprobe.model.jmx;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class ClusterSender {
     private String address;
     private int port;

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.googlecode.psiprobe</groupId>
 		<artifactId>psi-probe</artifactId>
-		<version>2.4.0-SNAPSHOT</version>
+		<version>2.3.3</version>
 	</parent>
 	<groupId>com.googlecode.psiprobe</groupId>
 	<artifactId>core</artifactId>
@@ -189,16 +189,11 @@
 		<dependency>
 			<groupId>javax.management</groupId>
 			<artifactId>jmxri</artifactId>
-			<scope>${jmxri.scope}</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>xpp3</groupId>
 			<artifactId>xpp3_min</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -217,30 +212,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<profiles>
-		<profile>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<jmxri.scope>compile</jmxri.scope>
-			</properties>
-		</profile>
-		<profile>
-			<id>jboss</id>
-			<properties>
-				<jmxri.scope>provided</jmxri.scope>
-			</properties>
-		</profile>
-	</profiles>
 </project>

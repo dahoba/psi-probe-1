@@ -10,8 +10,8 @@
  */
 package com.googlecode.psiprobe.jsp;
 
-import com.googlecode.psiprobe.tools.SizeExpression;
 import java.io.IOException;
+import java.text.NumberFormat;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.commons.logging.Log;
@@ -20,11 +20,15 @@ import org.apache.commons.logging.LogFactory;
 /**
  * JSP tag to convert size from bytes into human readable form: KB, MB, GB or TB
  * depending on how large the value in bytes is.
- * 
+ *
  * @author Vlad Ilyushchenko
- * @author Mark Lewis
  */
 public class VolumeTag extends TagSupport {
+
+    public static final double KB = 1024;
+    public static final double MB = KB * 1024;
+    public static final double GB = MB * 1024;
+    public static final double TB = GB * 1024;
 
     private Log logger = LogFactory.getLog(getClass());
 
@@ -44,16 +48,41 @@ public class VolumeTag extends TagSupport {
     }
 
     public int doStartTag() throws JspException {
-        String title = Long.toString(value);
-        String newValue = SizeExpression.roundedExpression(value, fractions);
+        double doubleResult;
+        String suffix;
+
+        if (value < KB) {
+            doubleResult = value;
+            suffix = "B";
+        } else if (value >= KB && value < MB) {
+            doubleResult = round(value / KB);
+            suffix = "KB";
+        } else if (value >= MB && value < GB) {
+            doubleResult = round(value / MB);
+            suffix = "MB";
+        } else if (value >= GB && value < TB) {
+            doubleResult = round(value / GB);
+            suffix = "GB";
+        } else {
+            doubleResult = round(value / TB);
+            suffix = "TB";
+        }
+
         try {
+            NumberFormat nf = NumberFormat.getInstance();
+            nf.setMinimumFractionDigits(fractions);
+            String title = Long.toString(value);
+            String newValue = nf.format(doubleResult) + " " + suffix;
             pageContext.getOut().write("<span title=\"" + title + "\">" + newValue + "</span>");
         } catch (IOException e) {
-            logger.debug("Exception writing value to JspWriter", e);
+            logger.debug(e);
             throw new JspException(e);
         }
 
         return EVAL_BODY_INCLUDE;
     }
 
+    private double round(double value) {
+        return Math.round(value * Math.pow(10, fractions)) / Math.pow(10, fractions);
+    }
 }

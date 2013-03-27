@@ -18,9 +18,8 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Silly JSP tag to display duration in milliseconds as hours:minutes:seconds.milliseconds
- * 
+ *
  * @author Vlad Ilyushchenko
- * @author Mark Lewis
  */
 public class DurationTag extends TagSupport {
 
@@ -36,7 +35,7 @@ public class DurationTag extends TagSupport {
         try {
             pageContext.getOut().write(duration(value));
         } catch (IOException e) {
-            logger.debug("Exception writing duration to JspWriter", e);
+            logger.debug(e.getMessage());
             throw new JspException(e);
         }
         return EVAL_BODY_INCLUDE;

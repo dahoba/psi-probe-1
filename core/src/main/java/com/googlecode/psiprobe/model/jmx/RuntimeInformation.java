@@ -10,26 +10,18 @@
  */
 package com.googlecode.psiprobe.model.jmx;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class RuntimeInformation {
     private String vmVendor;
     private long committedVirtualMemorySize = 0;
     private long freePhysicalMemorySize = 0;
     private long freeSwapSpaceSize = 0;
     private long processCpuTime = 0;
-    private int availableProcessors = 1;
     private long totalPhysicalMemorySize = 0;
     private long totalSwapSpaceSize = 0;
     private String osName;
     private String osVersion;
     private long startTime;
     private long uptime;
-    private long openFDCount;
-    private long maxFDCount;
 
     public long getCommittedVirtualMemorySize() {
         return committedVirtualMemorySize;
@@ -61,14 +53,6 @@ public class RuntimeInformation {
 
     public void setProcessCpuTime(long processCpuTime) {
         this.processCpuTime = processCpuTime;
-    }
-
-    public int getAvailableProcessors() {
-        return availableProcessors;
-    }
-
-    public void setAvailableProcessors(int availableProcessors) {
-        this.availableProcessors = availableProcessors;
     }
 
     public long getTotalPhysicalMemorySize() {
@@ -126,21 +110,4 @@ public class RuntimeInformation {
     public void setVmVendor(String vmVendor) {
         this.vmVendor = vmVendor;
     }
-
-    public long getOpenFDCount() {
-        return openFDCount;
-    }
-
-    public void setOpenFDCount(long openFDCount) {
-        this.openFDCount = openFDCount;
-    }
-
-    public long getMaxFDCount() {
-        return maxFDCount;
-    }
-
-    public void setMaxFDCount(long maxFDCount) {
-        this.maxFDCount = maxFDCount;
-    }
-
 }

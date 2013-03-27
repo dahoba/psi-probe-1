@@ -10,9 +10,5 @@
  */
 package com.googlecode.psiprobe.beans;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class JvmGCInfoAccessorBean {
 }

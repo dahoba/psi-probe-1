@@ -12,11 +12,6 @@ package com.googlecode.psiprobe.tools.logging;
 
 import java.io.File;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- * @author Mark Lewis
- */
 public class FileLogAccessor extends AbstractLogDestination {
 
     private String name;

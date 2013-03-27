@@ -35,8 +35,6 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Mailer {
 
-    public static final String PROPERTY_KEY_SMTP = "mail.smtp.host";
-
     private Log log = LogFactory.getLog(this.getClass());
     private String from;
     private String smtp;
@@ -61,11 +59,7 @@ public class Mailer {
     }
 
     public String getSmtp() {
-        if (smtp == null) {
-            return System.getProperty(PROPERTY_KEY_SMTP);
-        } else {
-            return smtp;
-        }
+        return smtp;
     }
 
     public void setFrom(String from) {
@@ -95,7 +89,7 @@ public class Mailer {
     public void send(MailMessage mailMessage) throws MessagingException {
         Properties props = (Properties) System.getProperties().clone();
         if (smtp != null) {
-            props.put(PROPERTY_KEY_SMTP, smtp);
+            props.put("mail.smtp.host", smtp);
         }
         PrintStream debugOut = LogOutputStream.createPrintStream(log, LogOutputStream.LEVEL_DEBUG);
 
@@ -109,16 +103,17 @@ public class Mailer {
     }
 
     private MimeMessage createMimeMessage(Session session, MailMessage mailMessage) throws MessagingException {
+        MimeMessage message = new MimeMessage(session);
+        if (mailMessage.getTo().isEmpty()) {
+            mailMessage.addRecipientTo(defaultTo);
+        }
         InternetAddress[] to = createAddresses(mailMessage.getToArray());
         InternetAddress[] cc = createAddresses(mailMessage.getCcArray());
         InternetAddress[] bcc = createAddresses(mailMessage.getBccArray());
-        if (to.length == 0) {
-            to = InternetAddress.parse(defaultTo);
-        }
 
         String subject = mailMessage.getSubject();
-        if (subjectPrefix != null && !subjectPrefix.equals("")) {
-            subject = subjectPrefix + " " + subject;
+        if (subjectPrefix != null) {
+            subject = subjectPrefix + subject;
         }
 
         MimeMultipart content = new MimeMultipart("related");
@@ -135,7 +130,6 @@ public class Mailer {
         MimeBodyPart bodyPart = createMessageBodyPart(mailMessage.getBody(), mailMessage.isBodyHtml());
         content.addBodyPart(bodyPart);
 
-        MimeMessage message = new MimeMessage(session);
         if (from == null) {
             message.setFrom(); //Uses mail.from property
         } else {

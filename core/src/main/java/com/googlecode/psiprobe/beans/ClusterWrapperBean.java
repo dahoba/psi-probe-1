@@ -22,10 +22,6 @@ import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 import org.apache.commons.modeler.Registry;
 
-/**
- * 
- * @author Vlad Ilyushchenko
- */
 public class ClusterWrapperBean {
 
     public Cluster getCluster(String serverName, String hostName, boolean loadMembers) throws Exception {
